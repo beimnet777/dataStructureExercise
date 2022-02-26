@@ -95,16 +95,16 @@ class LinkedList:
 
 
 
-
-list1=LinkedList()
-# list1.addBeginning(5)
-# list1.addBeginning(4)
-# list1.addBeginning(55)
-# list1.addBeginning(45)
-# list1.addEnd(100)
-list1.listToLinkedList([12,4,345,2,31,1])
-list1.insertAtIndex(0,3423)
-list1.removeAtIndex(2)
-list1.insertAfterValue(43,2)
-list1.removeByValue(2)
-list1.printList()
+if __name__=='__main__':
+  list1=LinkedList()
+  # list1.addBeginning(5)
+  # list1.addBeginning(4)
+  # list1.addBeginning(55)
+  # list1.addBeginning(45)
+  # list1.addEnd(100)
+  list1.listToLinkedList([12,4,345,2,31,1])
+  list1.insertAtIndex(0,3423)
+  list1.removeAtIndex(2)
+  list1.insertAfterValue(43,2)
+  list1.removeByValue(2)
+  list1.printList()
