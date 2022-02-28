@@ -1,5 +1,5 @@
 from re import search
-from xml.dom.minidom import Element
+
 
 
 class BinaryTree:
@@ -65,7 +65,7 @@ class BinaryTree:
             element += self.left.postOrderTraversal()
         if self.right:
             element += self.right.postOrderTraversal()
-        element.append( self.data)
+        element.append(self.data)
         return element
 
     def listToTree(self, data: list):
@@ -74,17 +74,17 @@ class BinaryTree:
 
     def search(self, data):
         if self.data == data:
-            return True
+            return self
         elif data < self.data:
             if self.left:
                 return self.left.search(data)
             else:
-                return False
+                return
         else:
             if self.right:
                 return self.right.search(data)
             else:
-                return False
+                return
 
     def findMin(self):
         while self.left:
@@ -105,6 +105,23 @@ class BinaryTree:
             sum += self.right.totalSum()
         return sum
 
+    def deleteNode(self, value):
+        node = self.search(value)
+        if node.left == None and node.right == None:
+            if node.parent.left and node.parent.left.data == node.data:
+                node.parent.left = None
+            else:
+                node.parent.right = None
+        elif node.right and node.left:
+            x = node.right.findMin()
+            node.deleteNode(x)
+            node.data = x
+
+        elif node.right:
+            node.parent.right = None
+        else:
+            node.parent.left = None
+
 
 if __name__ == '__main__':
     Root = BinaryTree(20)
@@ -112,11 +129,13 @@ if __name__ == '__main__':
     Root.listToTree([20, 10, 40, 23, 54, 34, 23, 56, 34,
                     0, -12, 24, 5, 3, 50, 30, 5, 15])
     Root.printTree()
+    Root.deleteNode(0)
     print(Root.inOrderTraversal())
     print(Root.postOrderTraversal())
     print(Root.preOrderTraversal())
-    x = 245
+    x = 30
     print(Root.search(x))
     print(Root.findMax())
     print(Root.findMin())
     print(Root.totalSum())
+    Root.printTree()
