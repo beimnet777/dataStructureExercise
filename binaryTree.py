@@ -1,4 +1,5 @@
 from re import search
+from xml.dom.minidom import Element
 
 
 class BinaryTree:
@@ -49,30 +50,73 @@ class BinaryTree:
             elements += self.right.inOrderTraversal()
         return elements
 
+    def preOrderTraversal(self):
+        element = []
+        element.append(self.data)
+        if self.left:
+            element += self.left.preOrderTraversal()
+        if self.right:
+            element += self.right.preOrderTraversal()
+        return element
+
+    def postOrderTraversal(self):
+        element = []
+        if self.left:
+            element += self.left.postOrderTraversal()
+        if self.right:
+            element += self.right.postOrderTraversal()
+        element.append( self.data)
+        return element
+
     def listToTree(self, data: list):
         for i in data:
             self.addNode(i)
 
     def search(self, data):
         if self.data == data:
-            return self
-        elif data< self.data:
+            return True
+        elif data < self.data:
             if self.left:
-              return  self.left.search(data)
+                return self.left.search(data)
             else:
                 return False
         else:
             if self.right:
-              return  self.right.search(data)
+                return self.right.search(data)
             else:
                 return False
+
+    def findMin(self):
+        while self.left:
+            self = self.left
+        return self.data
+
+    def findMax(self):
+        while self.right:
+            self = self.right
+        return self.data
+
+    def totalSum(self):
+        sum = 0
+        if self.left:
+            sum += self.left.totalSum()
+        sum += self.data
+        if self.right:
+            sum += self.right.totalSum()
+        return sum
 
 
 if __name__ == '__main__':
     Root = BinaryTree(20)
 
-    Root.listToTree([20, 10, 40, 50, 30, 5, 15])
+    Root.listToTree([20, 10, 40, 23, 54, 34, 23, 56, 34,
+                    0, -12, 24, 5, 3, 50, 30, 5, 15])
     Root.printTree()
     print(Root.inOrderTraversal())
-    x=10
-    print(Root.search(x) )
+    print(Root.postOrderTraversal())
+    print(Root.preOrderTraversal())
+    x = 245
+    print(Root.search(x))
+    print(Root.findMax())
+    print(Root.findMin())
+    print(Root.totalSum())
