@@ -89,7 +89,7 @@ class BinaryTree:
     def findMin(self):
         while self.left:
             self = self.left
-        return self.data
+        return self
 
     def findMax(self):
         while self.right:
@@ -113,9 +113,13 @@ class BinaryTree:
             else:
                 node.parent.right = None
         elif node.right and node.left:
-            x = node.right.findMin()
-            node.deleteNode(x)
-            node.data = x
+            x= node.right.findMin()
+            if x.parent.left and x.parent.left.data == x.data:
+                x.parent.left = None
+            else:
+                x.parent.right = None
+            
+            node.data = x.data
 
         elif node.right:
             node.parent.right = None
@@ -129,13 +133,13 @@ if __name__ == '__main__':
     Root.listToTree([20, 10, 40, 23, 54, 34, 23, 56, 34,
                     0, -12, 24, 5, 3, 50, 30, 5, 15])
     Root.printTree()
-    Root.deleteNode(0)
+    Root.deleteNode(20)
     print(Root.inOrderTraversal())
     print(Root.postOrderTraversal())
     print(Root.preOrderTraversal())
     x = 30
     print(Root.search(x))
     print(Root.findMax())
-    print(Root.findMin())
+    print(Root.findMin().data)
     print(Root.totalSum())
     Root.printTree()
