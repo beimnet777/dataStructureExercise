@@ -1,6 +1,9 @@
 """The graph takes all edges(list of tuples) in the graph at
  the begging and uses adjecency list to represtet
  the grapth"""
+from importlib.resources import path
+
+
 class GraphNode:
   def __init__(self,edges):
     self.edges=edges
@@ -11,6 +14,21 @@ class GraphNode:
       else:
         self.dict[i]=[j]
     print (self.dict)
+  def search_path(self,start,end,path=[]):
+    path=path+[start]
+    if start==end:
+      return [path]
+    if start not in self.dict.keys():
+      return []
+    all_paths=[]
+    for i in self.dict[start]:
+      if i not in path:
+        paths=self.search_path(i,end,path)
+      for i in paths:
+        all_paths.append(i)
+    return all_paths
+      
+
   
 if __name__=='__main__':
   edges=[('A','B'),
@@ -23,3 +41,4 @@ if __name__=='__main__':
   ('B','E'),
   ('E','G')]
   Graph=GraphNode(edges)
+  print(Graph.search_path('A','F'))
