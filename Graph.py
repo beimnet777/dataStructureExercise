@@ -24,9 +24,22 @@ class GraphNode:
     for i in self.dict[start]:
       if i not in path:
         paths=self.search_path(i,end,path)
-      for i in paths:
-        all_paths.append(i)
+        for i in paths:
+          all_paths.append(i)
     return all_paths
+  def shortest_path(self,start,end):
+    paths=self.search_path(start,end)
+    print(paths)
+    short=len(paths[0])
+    index=0
+    for i in range(len(paths)):
+      if len(paths[i])<short:
+        short=len(paths[i])
+        index=i
+
+    return paths[index]
+  def short_path(self,start,end,path=[]):
+    pass
       
 
   
@@ -41,4 +54,5 @@ if __name__=='__main__':
   ('B','E'),
   ('E','G')]
   Graph=GraphNode(edges)
-  print(Graph.search_path('A','F'))
+  print(Graph.search_path('A','E'))
+  print(Graph.shortest_path('A','M'))
