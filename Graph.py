@@ -2,6 +2,7 @@
  the begging and uses adjecency list to represtet
  the grapth"""
 from importlib.resources import path
+from queue import Queue
 
 
 class GraphNode:
@@ -38,8 +39,52 @@ class GraphNode:
         index=i
 
     return paths[index]
-  def short_path(self,start,end,path=[]):
-    pass
+  def breadth_first_traversal(self,start):
+    queue=Queue()
+    visited={}
+    queue.put(start)
+
+    while queue.not_empty:
+      visit=queue.get()
+      visited[visit]=True
+      if visit in self.dict.keys():
+        for i in self.dict[visit]:
+          if i is not visited:
+            queue.put(i)
+  def shortest_path_bft(self,start,end):
+    queue=Queue()
+    queue.put(start)
+    visited={}
+    prev={}
+    flag=0
+    while queue.not_empty:
+      visit=queue.get()
+      visited[visit]=True
+      if visit in self.dict.keys():
+        for i in self.dict[visit]:
+          if i not in visited:
+            prev[i]=visit
+            if i==end:
+              flag=1
+              break
+            queue.put(i)  
+        if flag==1:
+          break
+    path=[]
+    keys=list(prev.keys())
+    values=list(prev.values())    
+    if end in prev.keys() :
+      
+      while start!=end:
+        path.append(start)
+        start=keys[values.index(start)]
+      # path.reverse()
+    print(start)
+    return path, prev
+
+      
+
+
       
 
   
@@ -55,4 +100,6 @@ if __name__=='__main__':
   ('E','G')]
   Graph=GraphNode(edges)
   print(Graph.search_path('A','E'))
+  print(Graph.search_path('A','M'))
   print(Graph.shortest_path('A','M'))
+  print(Graph.shortest_path_bft('A','M'))
